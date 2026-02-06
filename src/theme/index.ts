@@ -53,11 +53,11 @@ export default createTheme({
           white: '#FFFFFF',
         },
         background: {
-          default: 'grey.50',
+          default: '#FAFAFA',
         },
         text: {
-          primary: 'black',
-          secondary: 'grey.700',
+          primary: '#000000',
+          secondary: '#616161',
           disabled: '#9E9E9E'
         },
       },
