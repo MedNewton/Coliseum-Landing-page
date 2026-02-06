@@ -12,7 +12,7 @@ import {
   Bar,
   XAxis,
   YAxis,
-  BarProps,
+  BarShapeProps,
 } from "recharts"
 
 const data = [
@@ -79,7 +79,7 @@ export default function FractionalTradingCard() {
             <Bar
               dataKey="value"
               barSize={31}
-              shape={(props: BarProps) => {
+              shape={(props: BarShapeProps) => {
                 const { x, y, width, height, index } = props
                 const fill = index === 0 ? "#F8601F" : "#3F51B5"
                 return (
