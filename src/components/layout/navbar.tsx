@@ -90,7 +90,7 @@ export default function Navbar() {
 
           <Stack direction="row" justifyContent="center" alignItems="center" gap={2}>
             <Box sx={{ display: { xs: "none", md: "block" } }}>
-              <GradientButton href="http://coliseum-marketplace.vercel.app/">Try Now</GradientButton>
+              <GradientButton href="https://coliseum-marketplace-live.vercel.app/">Try Now</GradientButton>
             </Box>
 
             <IconButton
