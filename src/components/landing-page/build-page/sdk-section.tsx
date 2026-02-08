@@ -123,8 +123,23 @@ export default function SdkSection() {
                 border: "1px solid",
                 borderColor: "grey.200",
                 boxShadow: "0px 2px 4px rgba(0,0,0,0.08), 0px 0px 6px rgba(0,0,0,0.03)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                p: 3,
               }}
-            />
+            >
+              <Box
+                component="img"
+                src="/features/sdk.svg"
+                alt="SDK illustration"
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                }}
+              />
+            </Box>
           </Grid>
         </Grid>
       </Box>
