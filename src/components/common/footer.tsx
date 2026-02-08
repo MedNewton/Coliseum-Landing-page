@@ -85,7 +85,7 @@ export default function Footer({ hasCTA = false }: FooterProps) {
             <Typography variant="h1" component="h2" color="black" mb={4}>
               Ready to build<br />the future of finance?
             </Typography>
-            <GradientButton href="https://sepolia.coliscan.com/" sx={{ mt: "0.5rem", height: "3.5625rem", maxWidth: "12rem", width: "100%" }}>
+            <GradientButton href="https://sepolia.coliscan.com/" sx={{ mt: "0.5rem", height: "3.5625rem", maxWidth: "21rem", width: "100%" }}>
             Add colichain to your wallet 
             </GradientButton>
           </Stack>

@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { Card, CardContent, Typography, Box, Stack } from "@mui/material"
+import { Card, CardContent, Typography, Box, Stack, Link } from "@mui/material"
 import Image from 'next/image'
 import GradientButton from "@/components/common/button"
 
@@ -9,11 +9,14 @@ interface WalletCardProps {
   svgPath: string
   title: string
   onAddWallet?: () => void
+  href?: string;
 }
 
-export default function WalletCard({ svgPath, title }: WalletCardProps) {
+export default function WalletCard({ svgPath, title, href }: WalletCardProps) {
   return (
     <Card
+    component={Link}
+    href={href ? href : ""}
       sx={{
         borderRadius: 2,
         width: "100%",
