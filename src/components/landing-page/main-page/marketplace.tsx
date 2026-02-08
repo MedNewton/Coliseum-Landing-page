@@ -44,7 +44,7 @@ export default function Marketplace() {
         textAlign="center"
         marginBottom={2}
       >
-        <Typography variant="h1" component="h2" color="black" marginBottom={4}>
+        <Typography variant="h1" component="h2" color="black" marginBottom={4} px={6}>
           The Coliseum Marketplace
         </Typography>
 
