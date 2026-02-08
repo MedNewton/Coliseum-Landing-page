@@ -35,13 +35,30 @@ export default function InquiryForm() {
     issueDescription: "",
   })
   const [privacyAccepted, setPrivacyAccepted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [emailError, setEmailError] = useState("")
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
 
   const handleInputChange =
     (field: keyof FormData) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const value = event.target.value
       setFormData((prev) => ({
         ...prev,
-        [field]: event.target.value,
+        [field]: value,
       }))
+
+      if (field === "email") {
+        if (value && !validateEmail(value)) {
+          setEmailError("Please enter a valid email address")
+        } else {
+          setEmailError("")
+        }
+      }
     }
 
   const handleSelectChange = (event: SelectChangeEvent) => {
@@ -55,10 +72,43 @@ export default function InquiryForm() {
     setPrivacyAccepted(event.target.checked)
   }
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (privacyAccepted) {
-      console.log("Form submitted:", formData)
+    if (!privacyAccepted) return
+
+    if (!validateEmail(formData.email)) {
+      setEmailError("Please enter a valid email address")
+      return
+    }
+
+    setSubmitting(true)
+
+    const formDataToSend = new FormData(event.currentTarget)
+    formDataToSend.append("access_key", "748a3dd3-1493-47cf-a437-1ecc537d3a9c")
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formDataToSend
+      })
+
+      const data = await response.json()
+      if (data.success) {
+        setSubmitted(true)
+        setFormData({
+          fullName: "",
+          email: "",
+          projectName: "",
+          companyType: "",
+          issueDescription: "",
+        })
+        setPrivacyAccepted(false)
+        setEmailError("")
+      }
+    } catch (error) {
+      console.error("Form submission error:", error)
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -81,35 +131,49 @@ export default function InquiryForm() {
       </Typography>
       <TextField
         fullWidth
+        name="fullName"
         label="Full Name"
         placeholder="Enter your full name"
         value={formData.fullName}
         onChange={handleInputChange("fullName")}
+        required
+        disabled={submitted}
         sx={{ mb: 3 }}
       />
       <TextField
         fullWidth
+        name="email"
         label="Email Address"
         placeholder="Enter your email"
         type="email"
         value={formData.email}
         onChange={handleInputChange("email")}
+        error={!!emailError}
+        helperText={emailError}
+        required
+        disabled={submitted}
         sx={{ mb: 3 }}
       />
       <TextField
         fullWidth
+        name="projectName"
         label="Project / dApp Name"
         placeholder="What's your project or app called?"
         value={formData.projectName}
         onChange={handleInputChange("projectName")}
+        required
+        disabled={submitted}
         sx={{ mb: 3 }}
       />
       <FormControl fullWidth sx={{ mb: 3 }}>
         <InputLabel>Company Type</InputLabel>
         <Select
+          name="companyType"
           value={formData.companyType}
           label="Company Type"
           onChange={handleSelectChange}
+          required
+          disabled={submitted}
           displayEmpty
           renderValue={(selected) => {
             if (!selected) return ""
@@ -129,17 +193,20 @@ export default function InquiryForm() {
 
       <TextField
         fullWidth
+        name="issueDescription"
         label="Issue Description"
         placeholder="Describe the problem or what you're trying to do..."
         multiline
         rows={4}
         value={formData.issueDescription}
         onChange={handleInputChange("issueDescription")}
+        required
+        disabled={submitted}
         sx={{ mb: 4 }}
       />
       <Box sx={{ display: "flex", alignItems: "flex-start", mb: 4 }}>
         <FormControlLabel
-          control={<Checkbox checked={privacyAccepted} onChange={handlePrivacyChange} />}
+          control={<Checkbox checked={privacyAccepted} onChange={handlePrivacyChange} disabled={submitted} />}
           label={
             <Typography
               variant="body2"
@@ -166,8 +233,8 @@ export default function InquiryForm() {
       </Box>
 
       <Stack display="row" width="100%" alignItems="center" justifyContent="flex-end">
-        <GradientButton type="submit" disabled={!privacyAccepted} sx={{ alignSelf: "flex-end" }}>
-          Make an Inquiry
+        <GradientButton type="submit" disabled={!privacyAccepted || submitting || submitted} sx={{ alignSelf: "flex-end" }}>
+          {submitted ? "Form Submitted Successfully" : submitting ? "Sending..." : "Make an Inquiry"}
         </GradientButton>
       </Stack>
     </Box>
