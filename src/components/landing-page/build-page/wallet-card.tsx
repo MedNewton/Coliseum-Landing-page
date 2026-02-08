@@ -17,6 +17,7 @@ export default function WalletCard({ svgPath, title, href }: WalletCardProps) {
     <Card
     component={Link}
     href={href ? href : ""}
+    underline="none"
       sx={{
         borderRadius: 2,
         width: "100%",
