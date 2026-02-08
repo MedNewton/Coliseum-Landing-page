@@ -1,42 +1,42 @@
+'use client'
+
+import { useState } from "react"
 import GradientButton from "@/components/common/button"
-import { Box, Container, Divider, Grid, IconButton, Link, Stack, Typography } from "@mui/material"
-import Image from "next/image"
+import { Box, Container, Divider, Stack, TextField, Typography } from "@mui/material"
 
 interface FooterProps {
   hasCTA?: boolean
 }
 
-const footerLinks = {
-    Product: [
-      { label: "Features", href: "#" },
-      { label: "Use Cases", href: "#" },
-      { label: "Technical Overview", href: "#" },
-    ],
-    Developers: [
-      { label: "Docs", href: "#" },
-      { label: "SDKs", href: "#" },
-      { label: "GitHub", href: "#" },
-    ],
-    Company: [
-      { label: "About Us", href: "#" },
-      { label: "Careers", href: "#" },
-      { label: "Contact", href: "#" },
-    ],
-    Legal: [
-      { label: "Privacy Policy", href: "#" },
-      { label: "Terms of Use", href: "#" },
-      { label: "Contact", href: "#" },
-    ],
+export default function Footer({ hasCTA = false }: FooterProps) {
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setSubmitting(true)
+
+    const formData = new FormData(event.currentTarget)
+    formData.append("access_key", "8542d964-386c-4192-baf4-9705cfa1499e")
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      })
+
+      const data = await response.json()
+      if (data.success) {
+        setSubmitted(true)
+        event.currentTarget.reset()
+      }
+    } catch (error) {
+      console.error("Form submission error:", error)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
-const socialLinks = [
-  { icon: <Image src="/socials/facebook.svg" alt="facebook" width={24} height={24} />, href: "#", color: "primary" },
-  { icon: <Image src="/socials/instagram.svg" alt="instagram" width={24} height={24} />, href: "#", color: "primary" },
-  { icon: <Image src="/socials/linkedin.svg" alt="linkedin" width={24} height={24} />, href: "#", color: "primary" },
-  { icon: <Image src="/socials/youtube.svg" alt="youtube" width={24} height={24} />, href: "#", color: "primary" },
-]
-
-export default function Footer({ hasCTA = false }: FooterProps) {
   return (
     <Box
       sx={{
@@ -102,9 +102,15 @@ export default function Footer({ hasCTA = false }: FooterProps) {
           }}
         >
           <Container maxWidth="lg">
-            <Grid container spacing={4}>
-              <Grid size={{ xs: 12, md: 4 }}>
-                <Box sx={{ display: "flex", alignItems: "flex-start", gap: 2, mb: 3 }}>
+            <Stack spacing={4}>
+              <Box sx={{
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "space-between",
+                flexDirection: { xs: "column", md: "row" },
+                gap: 4
+              }}>
+                <Box sx={{ display: "flex", alignItems: "flex-start", gap: 2 }}>
                   <Box
                     component="img"
                     src="/logo-footer.svg"
@@ -115,71 +121,60 @@ export default function Footer({ hasCTA = false }: FooterProps) {
                     High-performance blockchain powering scalable, secure, and developer-first financial products.
                   </Typography>
                 </Box>
-                <Stack direction="row" spacing={1}>
-                  {socialLinks.map((social, index) => (
-                    <IconButton
-                      key={index}
-                      href={social.href}
-                      sx={{
-                        backgroundColor: "white",
-                        color: social.color,
-                        width: 40,
-                        height: 40,
-                        "&:hover": {
-                          backgroundColor: "#f5f5f5",
-                        },
-                      }}
-                    >
-                      {social.icon}
-                    </IconButton>
-                  ))}
-                </Stack>
-              </Grid>
-              {Object.entries(footerLinks).map(([category, links]) => (
-                <Grid size={{ xs: 6, sm: 3, md: 2 }} key={category}>
-                  <Typography variant="h6" color="black" sx={{ mb: 2, fontWeight: 600 }}>
-                    {category}
-                  </Typography>
-                  <Stack spacing={1}>
-                    {links.map((link, index) => (
-                      <Link
-                        key={index}
-                        href={link.href}
-                        variant="body2" color="#212121CC"
-                        sx={{
-                          textDecoration: "none",
-                          "&:hover": {
-                            textDecoration: "underline",
-                          },
-                        }}
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </Stack>
-                </Grid>
-              ))}
-            </Grid>
-            <Divider sx={{ width: "100%", borderColor: "#0000001A", borderBottomWidth: "1px", my: 4 }}/>
 
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                flexWrap: "wrap", gap: 2,
-              }}
-            >
-              <Typography variant="body2" color="#212121CC">
-                © 2025 Coliseum Foundation. All rights reserved.
+                <Box
+                  component="form"
+                  onSubmit={onSubmit}
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    flexDirection: { xs: "column", sm: "row" },
+                    width: { xs: "100%", md: "auto" },
+                  }}
+                >
+                  <TextField
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                    size="small"
+                    disabled={submitted}
+                    sx={{
+                      minWidth: { xs: "100%", sm: 250 },
+                      "& .MuiOutlinedInput-root": {
+                        backgroundColor: "white",
+                        height: "3rem",
+                        "& fieldset": {
+                          borderColor: "#0000001A",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "#00000033",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "primary.main",
+                        },
+                      },
+                    }}
+                  />
+                  <GradientButton
+                    type="submit"
+                    disabled={submitting || submitted}
+                    sx={{
+                      height: "3rem",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {submitted ? "Thank you!" : submitting ? "Sending..." : "Subscribe"}
+                  </GradientButton>
+                </Box>
+              </Box>
+
+              <Divider sx={{ width: "100%", borderColor: "#0000001A", borderBottomWidth: "1px" }}/>
+
+              <Typography variant="body2" color="#212121CC" sx={{ textAlign: "center" }}>
+                © 2026 Coliseum Foundation. All rights reserved.
               </Typography>
-              <Typography variant="body2" color="#212121CC">
-                This page uses cookies.{" "}
-                <Link href="#" sx={{ color: "#212121CC", textDecoration: "underline" }}>
-                  See cookies details here
-                </Link>
-              </Typography>
-            </Box>
+            </Stack>
           </Container>
         </Box>
       </Container>
