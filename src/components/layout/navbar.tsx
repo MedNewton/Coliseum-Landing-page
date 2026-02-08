@@ -205,7 +205,7 @@ export default function Navbar() {
 
               <Box sx={{ mt: "auto" }}>
                 <Button
-                  href="http://coliseum-marketplace.vercel.app/"
+                  href="https://coliseum-marketplace-live.vercel.app/"
                   variant="contained"
                   fullWidth
                   sx={{
