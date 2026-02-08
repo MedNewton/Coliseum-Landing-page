@@ -10,9 +10,9 @@ export default function Home() {
   return (
     <>
     <Hero />
+    <Marketplace />
     <Features />
     <UseCases />
-    <Marketplace />
     {/*
     <Collab />
     <Testimonials />
