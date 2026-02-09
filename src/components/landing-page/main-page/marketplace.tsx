@@ -188,7 +188,7 @@ export default function Marketplace() {
                   fontWeight: 600,
                   lineHeight: 1.3,
                   mb: { xs: 0, md: 2 },
-                  textAlign: "left",
+                  textAlign: { xs: "center", md: "left" },
                 }}
               >
                 Trade, Discover & Collect Digital Assets
@@ -219,9 +219,9 @@ export default function Marketplace() {
               <Stack
                 sx={{ gridArea: "content" }}
                 flexDirection="column"
-                alignItems="flex-start"
+                alignItems={{ xs: "center", md: "flex-start" }}
                 justifyContent="center"
-                textAlign="left"
+                textAlign={{ xs: "center", md: "left" }}
               >
                 <Typography
                   variant="h6"
