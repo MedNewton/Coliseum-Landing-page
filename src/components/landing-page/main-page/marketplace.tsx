@@ -168,48 +168,35 @@ export default function Marketplace() {
               "&:last-child": { pb: { xs: 4, md: 6 } },
             }}
           >
-            {/* Main Content - Two Columns */}
             <Box
               sx={{
-                display: "flex",
-                flexDirection: { xs: "column", md: "row" },
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+                gridTemplateAreas: {
+                  xs: `"title" "image" "content"`,
+                  md: `"title image" "content image"`,
+                },
                 alignItems: "center",
                 gap: { xs: 4, md: 6 },
               }}
             >
-              <Stack
-                flexDirection="column"
-                alignItems="flex-start"
-                justifyContent="center"
-                textAlign="left"
-                flex={1}
+              <Typography
+                variant="h3"
+                component="h3"
+                sx={{
+                  gridArea: "title",
+                  fontWeight: 600,
+                  lineHeight: 1.3,
+                  mb: { xs: 0, md: 2 },
+                  textAlign: "left",
+                }}
               >
-                <Typography
-                  variant="h3"
-                  component="h3"
-                  sx={{ fontWeight: 600, lineHeight: 1.3, mb: 2 }}
-                >
-                  Trade, Discover & Collect Digital Assets
-                </Typography>
-                <Typography
-                  variant="h6"
-                  component="p"
-                  color="grey.700"
-                  sx={{ fontWeight: 400, lineHeight: 1.6, mb: 4 }}
-                >
-                  Explore a decentralized marketplace for NFTs, tokenized real-world assets, and digital collectibles — all powered by the Coliseum blockchain with low fees and instant settlement.
-                </Typography>
-                <GradientButton
-                  href="https://coliseum-marketplace-live.vercel.app/"
-                  sx={{ height: "3.5625rem", px: 4 }}
-                >
-                  Visit Marketplace
-                </GradientButton>
-              </Stack>
+                Trade, Discover & Collect Digital Assets
+              </Typography>
 
               <Box
                 sx={{
-                  flex: 1,
+                  gridArea: "image",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -228,6 +215,29 @@ export default function Marketplace() {
                   }}
                 />
               </Box>
+
+              <Stack
+                sx={{ gridArea: "content" }}
+                flexDirection="column"
+                alignItems="flex-start"
+                justifyContent="center"
+                textAlign="left"
+              >
+                <Typography
+                  variant="h6"
+                  component="p"
+                  color="grey.700"
+                  sx={{ fontWeight: 400, lineHeight: 1.6, mb: 4 }}
+                >
+                  Explore a decentralized marketplace for NFTs, tokenized real-world assets, and digital collectibles — all powered by the Coliseum blockchain with low fees and instant settlement.
+                </Typography>
+                <GradientButton
+                  href="https://coliseum-marketplace-live.vercel.app/"
+                  sx={{ height: "3.5625rem", px: 4 }}
+                >
+                  Visit Marketplace
+                </GradientButton>
+              </Stack>
             </Box>
           </CardContent>
         </StyledCard>
