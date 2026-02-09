@@ -168,14 +168,21 @@ export default function Marketplace() {
               "&:last-child": { pb: { xs: 4, md: 6 } },
             }}
           >
-            {/* Main Content */}
-            <Stack spacing={{ xs: 4, md: 0 }}>
-              {/* Title and Text */}
-              <Box
-                sx={{
-                  textAlign: { xs: "center", md: "left" },
-                  order: { xs: 1, md: 1 },
-                }}
+            {/* Main Content - Two Columns */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                alignItems: "center",
+                gap: { xs: 4, md: 6 },
+              }}
+            >
+              <Stack
+                flexDirection="column"
+                alignItems="flex-start"
+                justifyContent="center"
+                textAlign="left"
+                flex={1}
               >
                 <Typography
                   variant="h3"
@@ -188,82 +195,40 @@ export default function Marketplace() {
                   variant="h6"
                   component="p"
                   color="grey.700"
-                  sx={{ fontWeight: 400, lineHeight: 1.6 }}
+                  sx={{ fontWeight: 400, lineHeight: 1.6, mb: 4 }}
                 >
                   Explore a decentralized marketplace for NFTs, tokenized real-world assets, and digital collectibles — all powered by the Coliseum blockchain with low fees and instant settlement.
                 </Typography>
-              </Box>
-
-              {/* Desktop: Two Columns, Mobile: Stacked */}
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: { xs: "column", md: "row" },
-                  alignItems: "center",
-                  gap: { xs: 4, md: 6 },
-                  mt: { md: 4 },
-                }}
-              >
-                {/* Image - Order 2 on mobile, right column on desktop */}
-                <Box
-                  sx={{
-                    flex: { md: 1 },
-                    width: { xs: "100%", md: "auto" },
-                    order: { xs: 2, md: 2 },
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Box
-                    component="img"
-                    src="/marketplace.png"
-                    alt="Coliseum Marketplace"
-                    sx={{
-                      maxWidth: "100%",
-                      height: "auto",
-                      maxHeight: 400,
-                      borderRadius: "12px",
-                      animation: `${float} 5s ease-in-out infinite`,
-                    }}
-                  />
-                </Box>
-
-                {/* Spacer for desktop layout */}
-                <Box sx={{ flex: { md: 1 }, order: { md: 1 }, display: { xs: "none", md: "block" } }} />
-              </Box>
-
-              {/* Button - Order 3 on mobile, hidden on desktop (shown in text section) */}
-              <Box
-                sx={{
-                  display: { xs: "flex", md: "none" },
-                  justifyContent: "center",
-                  order: 3,
-                }}
-              >
-                <GradientButton
-                  href="https://coliseum-marketplace-live.vercel.app/"
-                  sx={{ height: "3.5625rem", px: 4, width: { xs: "100%", sm: "auto" } }}
-                >
-                  Visit Marketplace
-                </GradientButton>
-              </Box>
-
-              {/* Button for Desktop - inside text column */}
-              <Box
-                sx={{
-                  display: { xs: "none", md: "block" },
-                  mt: 4,
-                }}
-              >
                 <GradientButton
                   href="https://coliseum-marketplace-live.vercel.app/"
                   sx={{ height: "3.5625rem", px: 4 }}
                 >
                   Visit Marketplace
                 </GradientButton>
+              </Stack>
+
+              <Box
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Box
+                  component="img"
+                  src="/marketplace.png"
+                  alt="Coliseum Marketplace"
+                  sx={{
+                    maxWidth: "100%",
+                    height: "auto",
+                    maxHeight: 400,
+                    borderRadius: "12px",
+                    animation: `${float} 5s ease-in-out infinite`,
+                  }}
+                />
               </Box>
-            </Stack>
+            </Box>
           </CardContent>
         </StyledCard>
       </Stack>
